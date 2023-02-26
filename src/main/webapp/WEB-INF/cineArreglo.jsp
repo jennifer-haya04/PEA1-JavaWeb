@@ -1,23 +1,19 @@
-<%@page import="bean.Cine" %>
-<%@page import="bean.CineTarifas" %>
-<%@page import="bean.CinePeliculas" %>
-<%@page import="java.util.List" %>
 <%@ page pageEncoding="UTF-8"%>
 
-<% Cine cine = ( Cine ) session.getAttribute("cine"); %>
-<h2><%= cine.getRazonSocial() %></h2>
+<% String[] aCine = ( String[] ) session.getAttribute("aCine"); %>
+<h2><%= aCine[1] %></h2>
 <div class="cine-info">
 	<div class="cine-info datos">
-		<p><%= cine.getDireccion() %> - <%= cine.getDetalle() %></p>
-		<p><%= cine.getTelefonos() %></p>
+		<p><%= aCine[4] %> - <%= aCine[7] %></p>
+		<p><%= aCine[5] %></p>
 		<br />
 		<div class="tabla">
-		<% List<CineTarifas> lstTarifas = (List<CineTarifas>) session.getAttribute("lstCineTarifas");
+		<% String[][] mTarifas = (String[][]) session.getAttribute("mTarifas");
 		boolean bolFila = true;
-		for(CineTarifas cineTarifa : lstTarifas){%>
+		for(String[] aTarifa : mTarifas){%>
 			<div class=<%=bolFila ? "fila" : "fila impar" %>  >
-				<div class="celda-titulo"><%= cineTarifa.getDiasSemana() %></div>
-				<div class="celda"><%= cineTarifa.getPrecio() %></div>
+				<div class="celda-titulo"><%= aTarifa[0] %></div>
+				<div class="celda"><%= aTarifa[1] %></div>
 			</div>
 		<%bolFila = !bolFila; }%>
 		</div>
@@ -30,7 +26,7 @@
 				Tacna.</p>
 		</div>
 	</div>
-	<img src="img/cine/<%= cine.getIdCine() %>.2.jpg" /> <br />
+	<img src="img/cine/1.2.jpg" /> <br />
 	<br />
 	<h4>Los horarios de cada función están sujetos a cambios sin
 		previo aviso.</h4>
@@ -41,19 +37,19 @@
 				<div class="celda-cabecera">Películas</div>
 				<div class="celda-cabecera">Horarios</div>
 			</div>
-			<% List<CinePeliculas> lstPeliculas = (List<CinePeliculas>) session.getAttribute("lstCinePeliculas");
+			<% String[][] mPeliculas = (String[][]) session.getAttribute("mPeliculas");
 			 bolFila = false;
-			for(CinePeliculas cinePeli : lstPeliculas){%>
+			for(String[] aPeli : mPeliculas){%>
 			<div class=<%=bolFila ? "fila" : "fila impar" %>>
-				<div class="celda-titulo"><%= cinePeli.getTitulo() %></div>
-				<div class="celda"><%= cinePeli.getHorario() %></div>
+				<div class="celda-titulo"><%= aPeli[0] %></div>
+				<div class="celda"><%= aPeli[1] %></div>
 			</div>
 			<%bolFila = !bolFila; }%>
 		</div>
 	</div>
 </div>
 <div>
-	<img style="float: left;" src="img/cine/<%= cine.getIdCine() %>.3.jpg" /> <span
+	<img style="float: left;" src="img/cine/<%= aCine[0] %>.3.jpg" /> <span
 		class="tx_gris">Precios de los juegos: desde S/1.00 en todos
 		los Cine Star.<br /> Horario de atención de juegos es de 12:00 m hasta
 		las 10:30 pm. <br />

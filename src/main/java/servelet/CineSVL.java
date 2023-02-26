@@ -8,8 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.jdt.internal.compiler.IDebugRequestor;
+
+import bean.Cine;
 
 
 public class CineSVL extends HttpServlet {
@@ -27,18 +30,28 @@ public class CineSVL extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
-		Object id = request.getParameter("id");
+		Object idCine = request.getParameter("idCine");
 		dao.CineDAO cineDao = new dao.CineDAO();
-		if( id == null ) {
-			String[][] mCines = cineDao.getCines();
-			session.setAttribute("id", mCines == null ? null : "cines");
-			session.setAttribute("mCines", mCines);
+		if( idCine == null ) {
+			//String[][] mCines = cineDao.getCines();
+			//session.setAttribute("id", mCines == null ? null : "cines");
+			//session.setAttribute("mCines", mCines);
+			
+			List<Cine> lstCine = cineDao.getCinesList();
+			session.setAttribute("id", lstCine == null ? null : "cines");
+			session.setAttribute("lstCine", lstCine);
 		}else {
-			String[][] aCine = cineDao.getCine(id);
-			session.setAttribute("id", aCine == null ? null : "cine");
-			session.setAttribute("aCine", aCine);
-			session.setAttribute("mTarifas", cineDao.getCineTarifas(id));
-			session.setAttribute("mPeliculas", cineDao.getCinePeliculas(id));
+			//String[] aCine = cineDao.getCine(idCine);
+			//session.setAttribute("id", aCine == null ? null : "cine");
+			//session.setAttribute("aCine", aCine);
+			//session.setAttribute("mTarifas", cineDao.getCineTarifas(idCine));
+			//session.setAttribute("mPeliculas", cineDao.getCinePeliculas(idCine));
+			
+			Cine cine = cineDao.getCineList(idCine);
+			session.setAttribute("id", cine == null ? null : "cine");
+			session.setAttribute("cine", cine);
+			session.setAttribute("lstCineTarifas", cineDao.getCineTarifasList(idCine));
+			session.setAttribute("lstCinePeliculas", cineDao.getCinePeliculasList(idCine));
 		}
 		
 		response.sendRedirect("index.jsp");
